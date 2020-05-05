@@ -12,25 +12,25 @@ Sequenced genomes were de novo assembled with the SPAdes v. 3.10 (Bankevich et a
     spades.py --careful -k 21,33,55,77,99,127 -s sample.fastq -o sample.out
     
 #### Command used for PROKKA: 
-    prokka --compliant --prefix sample  --centre CoUCD --force --addgenes --genus Candidatus --species asiaticus --strain sample --locustag $sample $sample.fasta --outdir  samplePRoKKA
+    prokka --compliant --prefix sample  --centre CoUCD --force --addgenes --genus Clavibacter --species michiganensis --strain sample --locustag $sample $sample.fasta --outdir  samplePRoKKA
 
 Bioinformatics analysis
 
 ANI was calculated using pyani v. 0.2.3 (https://github.com/widdo wquin n/pyani) (Pritchard et al., 2016). 
 
-#### Command used for ANI: 
-    average_nucleotide_identity.py -i CL_genome/ -o Rhizobiales_ANI_N -m ANIm -g
+#### Circularized genome visualization was performed with Circos version 0.69 (Krzywinski et al. 2009): 
+    circos
 
 Sec-dependent effectors, protein sequences were screened for Sec signal peptides. Proteins possessing signal pep-tides for the Sec-dependent pathway were identified using Signalv. 3.0, SignalP v. 4.0, and Phobius v. 1.01 (Bendsten et al., 2004; Kall et al., 2004; 2007; Petersen et al., 2011). 
 
 #### Command used for SignalP3:  
-    signalp -t gram- -f short -u 0.44 /Whole_genome_analysis/CANDIDATUS/BLAST/Rhizobials/$sample.fasta > / Whole_genome_analysis/CANDIDATUS/INTERPROSCAN/Signalp4.1/$sample_signP4_OPR.out
+    signalp -t gram- -f short -u 0.44 /Whole_genome_analysis/Clavibacter/$sample.fasta > / Whole_genome_analysis/Clavibacter/INTERPROSCAN/Signalp4.1/$sample_signP4_OPR.out
 
 #### Command used for SignalP4:
-    interproscan.sh -f TSV -appl SignalP-GRAM_NEGATIVE -i /Whole_genome_analysis/CANDIDATUS/Proteins/Liberibacter/$sample.fasta -b /Whole_genome_analysis/CANDIDATUS/INTERPROSCAN/Signalp4.1/$sample.iprscan.signalp_4
+    interproscan.sh -f TSV -appl SignalP-GRAM_NEGATIVE -i /Whole_genome_analysis/Clavibacter/Proteins/$sample.fasta -b /Whole_genome_analysis/Clavibacter/INTERPROSCAN/Signalp4.1/$sample.iprscan.signalp_4
 
 #### Command used for Phobius:
-    interproscan.sh -f TSV -appl Phobius -i /Whole_genome_analysis/CANDIDATUS/Proteins/Liberibacter/$sample.fasta -b /Whole_genome_analysis/CANDIDATUS/INTERPROSCAN/Phobius/$sample.phobius
+    interproscan.sh -f TSV -appl Phobius -i /Whole_genome_analysis/Clavibacter/Proteins/$sample.fasta -b /Whole_genome_analysis/Clavibacter/INTERPROSCAN/Phobius/$sample.phobius
 
 Predicted lipoproteins and transmembrane proteins were filtered from the Sec secretomes.
 
@@ -39,7 +39,7 @@ Predicted lipoproteins and transmembrane proteins were filtered from the Sec sec
 
 Transmembrane topology was predicted using TMHMM v. 2.0 (Sonnhammer et al., 1998). 
 #### Command used for TMHMM:
-     interproscan.sh -f TSV -appl TMHMM -i /Whole_genome_analysis/CANDIDATUS /Proteins/Liberibacter/compliantFasta/$sample.fasta -b /Whole_genome_analysis/CANDIDATUS/INTERPROSCAN/TMHMM/$sample.TMHMM
+     interproscan.sh -f TSV -appl TMHMM -i /Whole_genome_analysis/Clavibacter/Proteins/compliantFasta/$sample.fasta -b /Whole_genome_analysis/Clavibacter/INTERPROSCAN/TMHMM/$sample.TMHMM
 
 
 ## Phylogenetic analyses
@@ -47,7 +47,7 @@ Orthologous genes of Las isolates were predicted using the OrthoMCL v. 2.0 pipel
 
 #### orthomcl clustering
     blastall -d goodNucleotides.fasta -p blastn -i goodNucleotides.fasta -m 8 -e 1e-5 -o goodNucleotides_blast_result.out
-    orthomclBlastParser /CANDIDATUS/OrthoMCL/Genes/goodprotein_blast_result.out /CANDIDATUS/OrthoMCL/Genes/Liberibacter/compliantFasta > similarSequences.txt
+    orthomclBlastParser /Clavibacter/OrthoMCL/Genes/goodprotein_blast_result.out /Clavibacter/OrthoMCL/Genes/compliantFasta > similarSequences.txt
     orthomclInstallSchema orthomcl.config mysql.log
     orthomclLoadBlast orthomcl.config similarSequences.txt
     orthomclPairs orthomcl.config orthomcl_pairs.log cleanup=no
@@ -73,4 +73,4 @@ A maximum-likelihood approach was used to reconstruct the phylogenetic tree usin
 
 You can cite our paper as:
 
-Thapa, S.P.;De Francesco, A; Trinh, J; Gurung, F.B.; Pang, Z; Vidalakis, G; Wang, N; Ancona, V; Ma, W; Coaker, G. (2020) Genome-wide analyses of Liberibacter species provides insights into evolution, phylogenetic relationships and virulence factors. Mol. Plant Pathol. 00, 1–16, https://doi.org/10.1111/mpp.12925
+Thapa SP, Pattathil S, Hahn MG, Jacques MA, Gilbertson RL, Coaker G, 2017. Genomic analysis of Clavibacter michiganensis reveals insight into virulence strategies and genetic diversity of a Gram‐positive bacterial pathogen. Molecular Plant‐Microbe Interactions 30, 786–802. https://doi.org/10.1094/MPMI-06-17-0146-R
